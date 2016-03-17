@@ -1,5 +1,5 @@
 ---
-name: "Cloud-native toolchain for microservices"
+name: "Simple toolchain"
 description: "Get started with this sample, which is an online store that consists of three microservices: a Catalog API, an Orders API, and a UI that calls both of the APIs. The sample includes a DevOps toolchain that is preconfigured for continuous delivery, source control, blue-green deployment, functional testing, issue tracking, online editing, and messaging.\n\nTo get started, click **CREATE**."
 version: 0.2
 required:
@@ -8,23 +8,6 @@ required:
  - test
 
 # Github repos
-catalog-api-repo:
-  service_id: githubpublic
-  parameters:
-    repo_name: "{{github.parameters.catalog-api-repo_name}}"
-    repo_url: "{{github.parameters.catalog-api-repo_url}}"
-    type: clone
-    has_issues: false
-  hidden: [form, description]
-
-orders-api-repo:
-  service_id: githubpublic
-  parameters:
-    repo_name: "{{github.parameters.orders-api-repo_name}}"
-    repo_url: "{{github.parameters.orders-api-repo_url}}"
-    type: clone
-    has_issues: false
-  hidden: [form, description]
 
 ui-repo:
   service_id: githubpublic
@@ -58,74 +41,10 @@ ui-build:
       PROD_REGION_ID: "{{deploy.parameters.prod-region}}"
   hidden: [form, description]  
 
-catalog-api-build:
-  service_id: pipeline
-  parameters:
-    name: "catalog-api-{{name}}"
-    metadata: catalog-api.pipeline.yml
-    env:
-      GIT_REPO_URL: ${catalog-api-repo.parameters.repo-url}
-      SAUCE_USER: "{{test.parameters.username}}"
-      API_KEY: "{{test.parameters.key}}"
-      CF_APP_NAME: "{{deploy.parameters.catalog-app-name}}"
-      DEV_SPACE_NAME: "{{deploy.parameters.dev-space}}"
-      DEV_ORG_NAME: "{{deploy.parameters.dev-organization}}"
-      DEV_REGION_ID: "{{deploy.parameters.dev-region}}"
-      QA_SPACE_NAME: "{{deploy.parameters.qa-space}}"
-      QA_ORG_NAME: "{{deploy.parameters.qa-organization}}"
-      QA_REGION_ID: "{{deploy.parameters.qa-region}}"
-      PROD_SPACE_NAME: "{{deploy.parameters.prod-space}}"
-      PROD_ORG_NAME: "{{deploy.parameters.prod-organization}}"
-      PROD_REGION_ID: "{{deploy.parameters.prod-region}}"
-  hidden: [form, description]
 
-orders-api-build:
-  service_id: pipeline
-  parameters:
-    name: "orders-api-{{name}}"
-    metadata: order-api.pipeline.yml
-    env:
-      GIT_REPO_URL: ${orders-api-repo.parameters.repo-url}
-      SAUCE_USER: "{{test.parameters.username}}"
-      API_KEY: "{{test.parameters.key}}"
-      CF_APP_NAME: "{{deploy.parameters.orders-app-name}}"
-      DEV_SPACE_NAME: "{{deploy.parameters.dev-space}}"
-      DEV_ORG_NAME: "{{deploy.parameters.dev-organization}}"
-      DEV_REGION_ID: "{{deploy.parameters.dev-region}}"
-      QA_SPACE_NAME: "{{deploy.parameters.qa-space}}"
-      QA_ORG_NAME: "{{deploy.parameters.qa-organization}}"
-      QA_REGION_ID: "{{deploy.parameters.qa-region}}"
-      PROD_SPACE_NAME: "{{deploy.parameters.prod-space}}"
-      PROD_ORG_NAME: "{{deploy.parameters.prod-organization}}"
-      PROD_REGION_ID: "{{deploy.parameters.prod-region}}"
-  hidden: [form, description]
-
-#Timeline Analytics
-events:
-  service_id: timeline
-
-#Slack
-messaging:
-  service_id: slack
-  metadata: slack.yml
-
-#Sauce Labs
-test:
-  service_id: saucelabs
-  metadata: saucelabs.yml
-
-#PagerDuty
-alerting:
-  service_id: pagerduty
-  metadata: pagerduty.yml
-  
 #Web IDE
 webide:
   service_id: orion
-
-#Active Deploy
-greenblue:
-  service_id: activedeploy
   
 #Deployment
 deploy:
@@ -150,9 +69,5 @@ github:
   schema: github.json
   service-category: githubpublic
   parameters:
-    catalog-api-repo_name: "catalog-api-{{name}}"
-    catalog-api-repo_url: https://github.com/oneibmcloud/Microservices_CatalogAPI
-    orders-api-repo_name: "orders-api-{{name}}"
-    orders-api-repo_url: https://github.com/oneibmcloud/Microservices_OrdersAPI
     ui-repo_name: "ui-{{name}}"
     ui-repo_url: https://github.com/oneibmcloud/Microservices_UI
