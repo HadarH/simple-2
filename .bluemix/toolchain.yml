@@ -156,4 +156,4 @@ github:
     orders-api-repo_name: "orders-api-{{name}}"
     orders-api-repo_url: https://github.com/oneibmcloud/Microservices_OrdersAPI
     ui-repo_name: "ui-{{name}}"
-    ui-repo_url: https://github.com/HadarH/hello-world.git
+    ui-repo_url: https://github.com/oneibmcloud/Microservices_UI
